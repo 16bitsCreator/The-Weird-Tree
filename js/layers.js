@@ -42,12 +42,14 @@ addLayer("e1", {
                 if (hasUpgrade('e1', 21)) baseEffect = baseEffect.mul(1.5); // Apply 1.5x boost from Lithium Hydride
                 return baseEffect; 
             },
+             effectDisplay() { return format(this.effect()) + "x"; },
         },
         12: {
             title: "Helium Boost",
             description: "Boosts point gain by 3x.",
             cost: new Decimal(50), // Cost of this upgrade
-            effect() { return new Decimal(3); }, // Helium Boost stays as 3x multiplier
+            effect() { return new Decimal(3); }, 
+             effectDisplay() { return format(this.effect()) + "x"; },// Helium Boost stays as 3x multiplier
         },
         13: {
             title: "Lithium Boost",
@@ -58,6 +60,7 @@ addLayer("e1", {
                 if (hasUpgrade('e1', 21)) baseEffect = baseEffect.mul(1.5); // Apply 1.5x boost from Lithium Hydride
                 return baseEffect; 
             },
+             effectDisplay() { return format(this.effect()) + "x"; },
         },
         21: {
             title: "Lithium Hydride (LiH)",
@@ -69,6 +72,7 @@ addLayer("e1", {
             unlocked() { 
                 return hasUpgrade('e1', 13); // Only unlock if both Hydrogen and Lithium boosts are purchased
             },
+            effectDisplay() { return format(this.effect()) + "x"; },
             effectDescription() {
                 return "Multiplies the effects of Hydrogen Boost and Lithium Boost by 1.5x.";
             },
