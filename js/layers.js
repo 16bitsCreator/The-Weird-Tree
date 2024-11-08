@@ -58,10 +58,23 @@ addLayer("m", {
             cost: new Decimal(3),
             effect() {
                 let eff = new Decimal(3);
+                if (hasUpgrade("m", 21)) eff = eff.times(upgradeEffect("m", 21));
                 return eff;
             },
             effectDisplay() { 
                 return "x" + format(this.effect()) + " to point generation"; 
+            }
+        },
+        21: {
+            title: "Focused Matter",
+            description: "Boosts Upgrade 13 based on reduced Matter points.",
+            cost: new Decimal(5),
+            effect() {
+                let eff = player[this.layer].points.add(1).pow(0.5);  // Boost scales with inverse of Matter points
+                return eff;
+            },
+            effectDisplay() { 
+                return "x" + format(this.effect()) + " to Upgrade 13"; 
             }
         },
     },
