@@ -102,5 +102,10 @@ addLayer("m", {
                 return "x" + format(this.effect()) + " to Upgrade 13"; 
             }
         },
+         23: {
+            title: "Singularity",
+            description: "Allows to buy max Matter points",
+            cost: new Decimal(30),
+        },
     },
 });
