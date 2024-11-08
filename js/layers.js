@@ -22,6 +22,7 @@ addLayer("m", {
 
     gainMult() {                                
         let mult = new Decimal(1);
+        if (hasUpgrade("m", 22)) mult = mult.div(upgradeEffect("m", 22));
         return mult;
     },
 
@@ -30,11 +31,7 @@ addLayer("m", {
         return exp;
     },
 
-    directMult() {
-        let mult = new Decimal(1);
-        if (hasUpgrade("m", 22)) mult = mult.times(upgradeEffect("m", 22));
-        return mult;
-    },
+    
 
     canBuyMax() {
         return hasUpgrade("m", 23);  
