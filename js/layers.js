@@ -6,7 +6,7 @@ addLayer("c", {
     resource: "Matter points",                   // Name of prestige currency
     baseResource: "points",                      // Resource required to prestige
     baseAmount() { return player.points },       // Returns the current amount of points
-    type: "normal",                              // Prestige type
+    type: "static",                              // Prestige type
     requires: new Decimal(10),                   // Required points to gain 1 Matter point
     exponent: 0.5,                               // Prestige formula exponent (square root)
 
