@@ -20,6 +20,7 @@ addLayer("m", {
 
     gainMult() {                                 // Multiplier for Matter point gain
         let mult = new Decimal(1);
+        if (hasUpgrade("m", 21)) mult = mult.times(upgradeEffect("m", 21));
         return mult;
     },
 
