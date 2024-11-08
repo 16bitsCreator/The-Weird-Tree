@@ -2,7 +2,7 @@ addLayer("m", {
     name: "Matter Points",                       // Display name for the layer
     symbol: "M",                                 // Symbol on the tree node
     position: 0,                                 // Position on the row
-    color: "#33A1FF",                            // Layer color
+    color: "#FF5733",                            // Updated Layer color to a shade of orange-red
     resource: "Matter points",                   // Name of prestige currency
     baseResource: "points",                      // Resource required to prestige
     baseAmount() { return player.points },       // Returns the current amount of points
@@ -12,7 +12,7 @@ addLayer("m", {
 
     startData() { return {                       // Default layer data
         unlocked: true,                          // Layer is unlocked from the start
-        points: new Decimal(0),                  // Common points start at 0
+        points: new Decimal(0),                  // Matter points start at 0
     }},
 
     row: 0,                                      // Row position in the tree
@@ -28,17 +28,41 @@ addLayer("m", {
         return exp;
     },
 
-   upgrades: {
-    11: {
-        title: "Boost Production",
-        description: "Increase point generation based on Matter points.",
-        cost: new Decimal(1),
-        effect() {
-            return player[this.layer].points.add(1).pow(0.5); // Example effect formula
+    upgrades: {
+        11: {
+            title: "Boost Production",
+            description: "Increases point generation based on Matter points.",
+            cost: new Decimal(1),
+            effect() {
+                return player[this.layer].points.add(1).pow(0.5);
+            },
+            effectDisplay() { 
+                return "x" + format(this.effect()) + " to point generation"; 
+            }
         },
-        effectDisplay() { 
-            return "x" + format(this.effect()) + " to point generation"; 
-        }
+        12: {
+            title: "Matter Expansion",
+            description: "Boosts Matter point gain.",
+            cost: new Decimal(2),
+            effect() {
+                let eff = new Decimal(2);
+                return eff;
+            },
+            effectDisplay() { 
+                return "x" + format(this.effect()) + " to Matter point gain"; 
+            }
+        },
+        13: {
+            title: "Accelerated Growth",
+            description: "Boosts point generation further.",
+            cost: new Decimal(3),
+            effect() {
+                let eff = new Decimal(3);
+                return eff;
+            },
+            effectDisplay() { 
+                return "x" + format(this.effect()) + " to point generation"; 
+            }
+        },
     },
-},
 });
