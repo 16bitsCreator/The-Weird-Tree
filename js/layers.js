@@ -2,7 +2,7 @@ addLayer("m", {
     name: "Matter Points",
     symbol: "M",
     position: 0,
-    color: "#33A1FF",
+    color: "#FF5733",
     resource: "Matter points",
     baseResource: "points",
     baseAmount() { return player.points },
