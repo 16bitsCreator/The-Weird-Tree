@@ -1,6 +1,6 @@
-addLayer("c", {
+addLayer("m", {
     name: "Matter Points",                       // Display name for the layer
-    symbol: "",                                 // Symbol on the tree node
+    symbol: "M",                                 // Symbol on the tree node
     position: 0,                                 // Position on the row
     color: "#33A1FF",                            // Layer color
     resource: "Matter points",                   // Name of prestige currency
