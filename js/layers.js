@@ -184,16 +184,12 @@ addLayer("m", {
     // Add Matter Essence production over time using the update function
     update(diff) {
         if (hasUpgrade("m", 34)) {
-            player.m.matterEssence = player.m.matterEssence.add(diff);  // Add Matter Essence based on time difference
+            player.m.matterEssence = player.m.matterEssence.add(new Decimal(diff).times(1));  // Add Matter Essence based on time difference
         }
     },
 
     // Display the Matter Essence in the layer
     display() {
-        let essenceDisplay = hasUpgrade("m", 34) ? 
-            `Matter Essence: ${format(player.m.matterEssence)} (produced 1 per second)` : 
-            `Matter Essence: 0 (locked until Upgrade 34)`;
-        
-        return essenceDisplay;
+        return `Matter Essence: ${format(player.m.matterEssence)}`;
     },
 });
