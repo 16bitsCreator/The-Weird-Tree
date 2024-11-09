@@ -17,7 +17,8 @@ addLayer("a", {
     }},
 
     row: 1,                                    // Row position in the tree (under Matter layer)
-    layerShown() { return player.m.upgrades.includes(33) },  // Unlocks when Matter upgrade 33 is bought
+    layerShown() { return player.m.upgrades.includes(33) || player.a.points.gte(1) }
+  // Unlocks when Matter upgrade 33 is bought
 
     effect() {                                 // Effect of Antimatter on Matter points
         let eff = player.a.points.add(1).pow(2);  // Effect is (Antimatter + 1)^2
