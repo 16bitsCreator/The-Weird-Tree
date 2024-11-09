@@ -186,27 +186,11 @@ addLayer("m", {
         if (hasUpgrade("m", 34)) {
             player.m.matterEssence = player.m.matterEssence.add(diff);  // Add Matter Essence based on time difference
         }
-
-        // Display Matter Essence via custom HTML
-        let matterEssenceDisplay = document.getElementById("matterEssenceDisplay");
-        if (matterEssenceDisplay) {
-            matterEssenceDisplay.innerHTML = `Matter Essence: ${format(player.m.matterEssence)} per second (due to Upgrade 34)`;
-        }
     },
 
-    // Create Matter Essence display element on the page
-    createHTML() {
-        let displayDiv = document.createElement('div');
-        displayDiv.id = "matterEssenceDisplay";
-        displayDiv.style.position = "absolute";
-        displayDiv.style.top = "10px";
-        displayDiv.style.left = "10px";
-        displayDiv.style.color = "#FF5733";
-        document.body.appendChild(displayDiv);
-    },
-
-    // Initialize the Matter Essence display when the game starts
-    init() {
-        this.createHTML();  // Add the display element when the layer is initialized
+    // Display the Matter Essence in the layer
+    display() {
+        let displayText = `Matter Essence: ${format(player.m.matterEssence)} per second (due to Upgrade 34)`;
+        return displayText;
     },
 });
