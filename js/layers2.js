@@ -21,6 +21,7 @@ addLayer("a", {
   // Unlocks when Matter upgrade 33 is bought
 
     effect() {                                 // Effect of Antimatter on Matter points
+        if (player.a.points.lte(0)) return new Decimal(1); // Prevent issues when no Antimatter points
         let eff = player.a.points.add(1).pow(2);  // Effect is (Antimatter + 1)^2
         return eff;
     },
