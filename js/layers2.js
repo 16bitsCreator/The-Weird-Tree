@@ -7,7 +7,7 @@ addLayer("a", {
     baseResource: "Matter points",             // Resource required to prestige
     baseAmount() { return player.m.points },   // Amount of Matter points available
     type: "static",                            // Static layer type
-    requires: new Decimal(500),                 // Required Matter points to gain 1 Antimatter
+    requires: new Decimal(100),                 // Required Matter points to gain 1 Antimatter
     exponent: 1.5,                             // Makes Antimatter harder to gain
     canBuyMax() { return false },              // Disable "buy max" option for harder scaling
 
