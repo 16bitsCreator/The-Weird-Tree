@@ -28,7 +28,7 @@ addLayer("a", {
     // Effect of Antimatter on Matter points
     effect() {                                  
         let eff = new Decimal(1);  // Default effect multiplier is 1
-        if (player.a.points.gte(1)) {  // Prevent issues if no Antimatter points
+        if (player.a.points.gte(1)) {  // Ensure the effect is applied when Antimatter points are >= 1
             eff = player.a.points.add(1).pow(2);  // Effect is (Antimatter + 1)^2
         }
         return eff;
