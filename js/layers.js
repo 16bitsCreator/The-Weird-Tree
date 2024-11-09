@@ -51,15 +51,15 @@ addLayer("m", {
         },
         12: {
             title: "Matter Expansion",
-            description: "Boosts Matter point gain.",
+            description: "Reduce Requirement",
             cost: new Decimal(2),
             effect() {
-                let eff = new Decimal(2);
+                let eff = new Decimal(5);
                 if (hasUpgrade("m", 22)) eff = eff.times(upgradeEffect("m", 22));
                 return eff;
             },
             effectDisplay() { 
-                return "x" + format(this.effect()) + " to Matter point gain"; 
+                return "x" + format(this.effect()) + " To reduce requirement "; 
             }
         },
         13: {
@@ -68,6 +68,7 @@ addLayer("m", {
             cost: new Decimal(5),
             effect() {
                 let eff = new Decimal(3);
+                if (hasUpgrade("m", 31)) eff = eff.add(upgradeEffect("m",31));
                 if (hasUpgrade("m", 21)) eff = eff.times(upgradeEffect("m", 21));
                 return eff;
             },
@@ -90,19 +91,31 @@ addLayer("m", {
         22: {
             title: "Focused Points",
             description: "Boosts Upgrade 12 based on reduced points.",
-            cost: new Decimal(10),
+            cost: new Decimal(15),
             effect() {
                 let eff = player[this.layer].points.add(1).pow(0.25);  // Boost scales with inverse of Matter points
                 return eff;
             },
             effectDisplay() { 
-                return "x" + format(this.effect()) + " to Upgrade 13"; 
+                return "x" + format(this.effect()) + " to Upgrade 12"; 
             }
         },
          23: {
             title: "Singularity",
             description: "Allows to buy max Matter points",
             cost: new Decimal(30),
+        },
+        31: {
+            title: "Additive Matter",
+            description: "Boosts Upgrade 13 based on reduced Matter points.",
+            cost: new Decimal(10),
+            effect() {
+                let eff = player[this.layer].points.add(1).pow(0.1);  // Boost scales with inverse of Matter points
+                return eff;
+            },
+            effectDisplay() { 
+                return "+" + format(this.effect()) + " base to upgrade 13"; 
+            }
         },
     },
 });
