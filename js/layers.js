@@ -14,6 +14,7 @@ addLayer("m", {
         return {
             unlocked: true,                  // Starts unlocked
             points: new Decimal(0),          // Starts with zero Matter points
+            matterEssence: new Decimal(0),   // Initialize Matter Essence to 0
         }
     },
 
@@ -24,9 +25,6 @@ addLayer("m", {
     gainMult() {                                
         let mult = new Decimal(1);            // Start with a base multiplier of 1
         if (hasUpgrade("m", 12)) mult = mult.div(upgradeEffect("m", 12));   // Apply Upgrade 12 effect
-        if (player.a.unlocked) {               // Only apply Antimatter effect if unlocked
-            mult = mult.div(player.a.effect()); // Apply Antimatter effect to Matter point generation
-        }
         return mult;
     },
 
@@ -62,7 +60,7 @@ addLayer("m", {
                 return eff;
             },
             effectDisplay() { 
-                return "x" + format(this.effect()) + " To reduce requirement"; 
+                return "/" + format(this.effect()) + " To reduce requirement"; 
             }
         },
         13: {
@@ -133,9 +131,67 @@ addLayer("m", {
             }
         },
         33: {
-            title: "Unlocks a new Layer",
+            title: "Unlocks a new column of upgrades",
             description: "Read Title",
             cost: new Decimal(300),
         },
+        14: {
+            title: "Points Reversal",
+            description: "Divide matter requirement based on points.",
+            cost: new Decimal(250),
+            effect() {
+                let eff = player.points.add(1).pow(0.3);
+                if (hasUpgrade("m", 24)) eff = eff.pow(upgradeEffect("m", 24)); 
+                return eff;
+            },
+            effectDisplay() { 
+                return "/" + format(this.effect()) + " to requirement"; 
+            },
+            unlocked() {
+                return hasUpgrade("m", 33);  
+            },
+        },
+        24: {
+            title: "Intensive Reversal",
+            description: "Raise upgrade 14 based on Matter",
+            cost: new Decimal(400),
+            effect() {
+                let eff = player.points.add(1).pow(0.095);  // Boost based on points
+                return eff;
+            },
+            effectDisplay() { 
+                return "^" + format(this.effect()) + " to requirement "; 
+            },
+            unlocked() {
+                return hasUpgrade("m", 33);  
+            },
+        },
+
+        // New Upgrade 34
+        34: {
+            title: "Matter Essence",
+            description: "Adds 1 Matter Essence every second.",
+            cost: new Decimal(500),  // Cost for the upgrade
+            effect() {
+                return new Decimal(1);  // Just a placeholder, as the effect is automatically handled
+            },
+            unlocked() {
+                return hasUpgrade("m", 33);  // Unlock after Upgrade 33
+            },
+        },
+    },
+
+    // Add Matter Essence production over time using the update function
+    update(diff) {
+        if (hasUpgrade("m", 34)) {
+            player.m.matterEssence = player.m.matterEssence.add(diff);  // Add Matter Essence based on time difference
+        }
+    },
+
+    // Display Matter Essence at the top of the screen
+    displayExtra() {
+        let ess = format(player.m.matterEssence);
+        return `Matter Essence: ${ess} per second (due to Upgrade 34)`;
     },
 });
+
