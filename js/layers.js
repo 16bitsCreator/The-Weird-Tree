@@ -108,7 +108,7 @@ addLayer("m", {
         31: {
             title: "Additive Matter",
             description: "Boosts Upgrade 13 based on reduced Matter points.",
-            cost: new Decimal(10),
+            cost: new Decimal(100),
             effect() {
                 let eff = player[this.layer].points.add(1).pow(0.1);  // Boost scales with inverse of Matter points
                 return eff;
