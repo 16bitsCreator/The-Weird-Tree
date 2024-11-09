@@ -133,7 +133,7 @@ addLayer("m", {
         33: {
             title: "Unlocks a new Layer",
             description: "Read Title",
-            cost: new Decimal(1000),
+            cost: new Decimal(500),
              
         },
     },
