@@ -23,6 +23,9 @@ addLayer("m", {
     gainMult() {                                
         let mult = new Decimal(1);
         if (hasUpgrade("m", 12)) mult = mult.div(upgradeEffect("m", 12));
+        if (player.a.unlocked) {  // Only apply if Antimatter layer is unlocked
+            mult = mult.div(player.a.effect());  // Apply Antimatter effect to Matter point generation
+        }
         return mult;
     },
 
