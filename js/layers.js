@@ -43,7 +43,7 @@ addLayer("m", {
             description: "Increases point generation based on Matter points.",
             cost: new Decimal(1),
             effect() {
-                return player[this.layer].points.add(1).pow(0.5); // Boost based on Matter points
+                return player[this.layer].points.add(1).pow(0.75); // Boost based on Matter points
             },
             effectDisplay() { 
                 return "x" + format(this.effect()) + " to point generation"; 
