@@ -126,7 +126,7 @@ addLayer("m", {
             description: "Boosts Upgrade 12 based on reduced points.",
             cost: new Decimal(200),
             effect() {
-                let eff = player.points.add(1).pow(0.085);  // Boost scales with inverse of Matter points
+                let eff = player.points.add(1).pow(0.09);  // Boost scales with inverse of Matter points
                 return eff;
             },
             effectDisplay() { 
@@ -136,7 +136,7 @@ addLayer("m", {
         33: {
             title: "Unlocks a new Layer",
             description: "Read Title",
-            cost: new Decimal(500),
+            cost: new Decimal(300),
              
         },
     },
