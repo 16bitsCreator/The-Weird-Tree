@@ -55,6 +55,7 @@ addLayer("m", {
             cost: new Decimal(2),
             effect() {
                 let eff = new Decimal(2);
+                if (hasUpgrade("m", 32)) eff = eff.add(upgradeEffect("m",32));
                 if (hasUpgrade("m", 22)) eff = eff.times(upgradeEffect("m", 22));
                 return eff;
             },
@@ -116,6 +117,24 @@ addLayer("m", {
             effectDisplay() { 
                 return "+" + format(this.effect()) + " base to upgrade 13"; 
             }
+        },
+        32: {
+            title: "Additive Points",
+            description: "Boosts Upgrade 12 based on reduced points.",
+            cost: new Decimal(200),
+            effect() {
+                let eff = player.points.add(1).pow(0.085);  // Boost scales with inverse of Matter points
+                return eff;
+            },
+            effectDisplay() { 
+                return "+" + format(this.effect()) + " base to upgrade 12"; 
+            }
+        },
+        33: {
+            title: "Unlocks a new Layer",
+            description: "Read Title",
+            cost: new Decimal(1000),
+             
         },
     },
 });
