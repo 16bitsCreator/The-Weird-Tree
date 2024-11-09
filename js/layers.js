@@ -24,7 +24,8 @@ addLayer("m", {
     // Multiplier for the Matter point generation
     gainMult() {                                
         let mult = new Decimal(1);            // Start with a base multiplier of 1
-        if (hasUpgrade("m", 12)) mult = mult.div(upgradeEffect("m", 12));   // Apply Upgrade 12 effect
+        if (hasUpgrade("m", 12)) mult = mult.div(upgradeEffect("m", 12));
+         if (hasUpgrade("m", 14)) mult = mult.div(upgradeEffect("m", 14));// Apply Upgrade 12 effect
         return mult;
     },
 
