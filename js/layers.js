@@ -22,7 +22,7 @@ addLayer("m", {
 
     gainMult() {                                
         let mult = new Decimal(1);
-        if (hasUpgrade("m", 22)) mult = mult.div(upgradeEffect("m", 22));
+        if (hasUpgrade("m", 12)) mult = mult.div(upgradeEffect("m", 12));
         return mult;
     },
 
@@ -54,7 +54,7 @@ addLayer("m", {
             description: "Reduce Requirement",
             cost: new Decimal(2),
             effect() {
-                let eff = new Decimal(5);
+                let eff = new Decimal(2);
                 if (hasUpgrade("m", 22)) eff = eff.times(upgradeEffect("m", 22));
                 return eff;
             },
