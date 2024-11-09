@@ -190,7 +190,10 @@ addLayer("m", {
 
     // Display the Matter Essence in the layer
     display() {
-        let displayText = `Matter Essence: ${format(player.m.matterEssence)} per second (due to Upgrade 34)`;
-        return displayText;
+        let essenceDisplay = hasUpgrade("m", 34) ? 
+            `Matter Essence: ${format(player.m.matterEssence)} (produced 1 per second)` : 
+            `Matter Essence: 0 (locked until Upgrade 34)`;
+        
+        return essenceDisplay;
     },
 });
