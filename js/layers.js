@@ -1,42 +1,46 @@
 addLayer("m", {
-    name: "Matter Points",                  // Name of the layer
-    symbol: "M",                             // Symbol for the layer
-    position: 0,                             // Position on the tree
-    color: "#FF5733",                        // Color of the layer
-    resource: "Matter points",               // Name of the resource
-    baseResource: "points",                  // Resource required for this layer
-    baseAmount() { return player.points },   // Amount of points required for this layer
-    type: "static",                          // Type of layer, static in this case
-    requires: new Decimal(10),               // Number of points required for the first Matter point
-    exponent: 0.5,                           // Exponent scaling for Matter points
+    name: "Matter Points",                     // Name of the layer
+    symbol: "M",                               // Symbol for the layer
+    position: 0,                               // Position on the tree
+    color: "#FF5733",                          // Color of the layer
+    resource: "Matter points",                 // Name of the resource
+    baseResource: "points",                    // Resource required for this layer
+    baseAmount() { return player.points },     // Amount of points required for this layer
+    type: "static",                            // Set the layer type to 'static'
+    requires: new Decimal(10),                 // Requirement to start earning Matter points
+    exponent: 0.5,                             // Scaling exponent
 
     startData() { 
         return {
-            unlocked: true,                  // Starts unlocked
-            points: new Decimal(0),          // Starts with zero Matter points
-            matterEssence: new Decimal(0),   // Initialize Matter Essence to 0
+            unlocked: true,                    // Make sure layer is unlocked by default
+            points: new Decimal(0),            // Start with zero Matter points
+            matterEssence: new Decimal(0),     // Initialize Matter Essence
         }
     },
 
-    row: 0,                                  // Row position for the tree
-    layerShown() { return true },            // Always show this layer
+    row: 0,                                    // Row position for the tree
+    layerShown() { return true },              // Always show this layer
 
-    gainMult() {                                 
-        let mult = new Decimal(1);            // Start with a base multiplier of 1
-        if (hasUpgrade("m", 12)) mult = mult.div(upgradeEffect("m", 12));   // Apply Upgrade 12 effect
+    canReset() {                               // Ensure reset button shows if points meet requirement
+        return player.points.gte(this.requires);
+    },
+
+    gainMult() {                               // Multiplier for Matter point gain
+        let mult = new Decimal(1);
+        if (hasUpgrade("m", 12)) mult = mult.div(upgradeEffect("m", 12));   
         return mult;
     },
 
-    gainExp() {                              
-        return new Decimal(1);                // No scaling exponent
+    gainExp() {                               
+        return new Decimal(1);                 // No extra scaling exponent
     },
 
     canBuyMax() {
-        return hasUpgrade("m", 23);           // Allow max purchase if Upgrade 23 is bought
+        return hasUpgrade("m", 23);            // Allow max purchases if Upgrade 23 is obtained
     },
 
-    canReset() {                              // Ensure reset button shows if you can reset
-        return player.points.gte(this.requires);
+    doReset(resettingLayer) {
+        if (resettingLayer === "m") return;    // No reset if it’s the same layer
     },
 
     upgrades: {
@@ -50,14 +54,6 @@ addLayer("m", {
             effectDisplay() { 
                 return "x" + format(this.effect()) + " to point generation"; 
             }
-        },
-        34: {
-            title: "Matter Essence",
-            description: "Adds 1 Matter Essence every second.",
-            cost: new Decimal(500),
-            unlocked() {
-                return hasUpgrade("m", 33);
-            },
         },
     },
 
@@ -73,6 +69,7 @@ addLayer("m", {
         "Main Tab": {
             content: [
                 "main-display",
+                "prestige-button",             // Explicitly show the prestige/reset button here
                 "resource-display",
                 ["display-text", function() { 
                     return `Matter Essence: ${format(player.m.matterEssence)}`;
