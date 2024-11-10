@@ -24,7 +24,10 @@ addLayer("m", {
     gainMult() {                                
         let mult = new Decimal(1);            // Start with a base multiplier of 1
         if (hasUpgrade("m", 12)) mult = mult.div(upgradeEffect("m", 12)); 
-        if (hasUpgrade("m", 14)) mult = mult.div(upgradeEffect("m", 14));// Apply Upgrade 12 effect
+        if (hasUpgrade("m", 14)) mult = mult.div(upgradeEffect("m", 14));
+         if (player.m.matterEssence.gt(0)) {
+            mult = mult.div(new Decimal(1).add(player.m.matterEssence.log(10).pow(2)));
+        }
         return mult;
     },
 
@@ -174,15 +177,34 @@ addLayer("m", {
                 return hasUpgrade("m", 33);
             },
         },
+        41: {
+            title: "Essence Amplification",
+            description: "Boost Matter Essence production based on Points.",
+            cost: new Decimal(50),                    // Cost in Matter Essence
+            currencyDisplayName: "Matter Essence",    // Display name for currency
+            currencyInternalName: "matterEssence",    // Internal name for currency
+            currencyLayer: "m",                       // Layer that the currency is on
+            effect() {
+                // Boost based on points: `1 + log10(points + 1)`
+                return player.points.add(1).log(10).add(1);
+            },
+            effectDisplay() { 
+                return "x" + format(this.effect()) + " to Matter Essence production"; 
+            },
+            unlocked() {
+                return hasUpgrade("m", 34);           // Unlock after Matter Essence upgrade
+            },
+        },
     },
 
     // Matter Essence production in update function
     update(diff) {
-        if (hasUpgrade("m", 34)) {
-            player.m.matterEssence = player.m.matterEssence.add(new Decimal(1).times(diff));
-        }
-    },
+        let essenceGain = new Decimal(1);
+        if (hasUpgrade("m", 34)) essenceGain = essenceGain.times(diff);     // Base essence gain of 1 per second
+        if (hasUpgrade("m", 41)) essenceGain = essenceGain.times(upgradeEffect("m", 41));  // Apply boost from Upgrade 41
 
+        player.m.matterEssence = player.m.matterEssence.add(essenceGain);
+    },
     // Display Matter Essence using tabFormat
     tabFormat: {
         "Main Tab": {
