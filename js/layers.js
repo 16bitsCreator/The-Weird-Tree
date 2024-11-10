@@ -195,18 +195,44 @@ addLayer("m", {
                 return hasUpgrade("m", 34);           // Unlock after Matter Essence upgrade
             },
         },
+        42: {
+            title: "Matteristic Essence",
+            description: "Creates a new effect to reduce Matter Essence boost to itself.",
+            cost: new Decimal(700),
+            currencyDisplayName: "Matter Essence",
+            currencyInternalName: "matterEssence",
+            currencyLayer: "m",
+            effect() {
+                // Reduction effect: divides essence boost by `1 + log10(Matter Essence + 1)`
+                return new Decimal(1).add(player.m.matterEssence.add(1).log(10));
+            },
+            effectDisplay() {
+                return "/" + format(this.effect()) + " to self-boost";
+            },
+            unlocked() {
+                return hasUpgrade("m", 34);
+            },
+        },
     },
+    
 
     // Matter Essence production in update function
-    update(diff) {
+     update(diff) {
         let essenceGain = new Decimal(1);
-        if (hasUpgrade("m", 34)) essenceGain = essenceGain.times(diff);     // Base essence gain of 1 per second
+        if (hasUpgrade("m", 34)) essenceGain = essenceGain.times(diff);
+        
         if (hasUpgrade("m", 41)) essenceGain = essenceGain.times(upgradeEffect("m", 41));  // Apply boost from Upgrade 41
+        
+        // Apply reduction from Upgrade 42 if unlocked
+        if (hasUpgrade("m", 42)) {
+            essenceGain = essenceGain.div(upgradeEffect("m", 42));
+        }
 
         player.m.matterEssence = player.m.matterEssence.add(essenceGain);
     },
+
     // Display Matter Essence using tabFormat
-    tabFormat: {
+     tabFormat: {
         "Main Tab": {
             content: [
                 "main-display",
@@ -215,8 +241,21 @@ addLayer("m", {
                 ["display-text", function() { 
                     return `Matter Essence: ${format(player.m.matterEssence)}`;
                 }],
+                ["display-text", function() {
+                    // Display the Matter Essence effect on Matter Points
+                    if (player.m.matterEssence.gt(0)) {
+                        let essenceEffect = new Decimal(1).add(player.m.matterEssence.log(10).pow(2));
+                        return `Matter Points boost from Essence: /${format(essenceEffect)}`;
+                    } else return "";
+                }],
+                ["display-text", function() {
+                    // Display the self-boost reduction effect from Upgrade 42 if bought
+                    if (hasUpgrade("m", 42)) {
+                        return `Matter Essence self-boost reduction: /${format(upgradeEffect("m", 42))}`;
+                    } else return "";
+                }],
                 "upgrades",
             ],
         },
     },
-}); 
+});
