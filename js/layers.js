@@ -155,7 +155,7 @@ addLayer("m", {
         },
         24: {
             title: "Intensive Reversal",
-            description: "Raise upgrade 14 based on Matter",
+            description: "Raise upgrade 14 based on Points",
             cost: new Decimal(600),
             effect() {
                 let eff = player.points.add(1).pow(0.095);
