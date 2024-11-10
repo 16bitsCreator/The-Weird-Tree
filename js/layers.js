@@ -229,7 +229,7 @@ addLayer("m", {
 
         // Apply reduction from Upgrade 42 if bought
         if (hasUpgrade("m", 42)) {
-            essenceGain = essenceGain.div(upgradeEffect("m", 42));
+            essenceGain = essenceGain.times(upgradeEffect("m", 42));
         }
 
         // Add calculated essence gain to Matter Essence
@@ -257,7 +257,7 @@ addLayer("m", {
                 ["display-text", function() {
                     // Display the self-boost reduction effect from Upgrade 42 if bought
                     if (hasUpgrade("m", 42)) {
-                        return `Matter Essence self-boost reduction: /${format(upgradeEffect("m", 42))}`;
+                        return `Matter Essence self-boost reduction: x${format(upgradeEffect("m", 42))}`;
                     } else return "";
                 }],
                 "upgrades",
