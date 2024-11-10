@@ -257,7 +257,7 @@ addLayer("m", {
                 ["display-text", function() {
                     // Display the self-boost reduction effect from Upgrade 42 if bought
                     if (hasUpgrade("m", 42)) {
-                        return `Matter Essence self-boost : x${format(upgradeEffect("m", 42))}`;
+                        return `Matter Essence self-boost: x${format(upgradeEffect("m", 42))}`;
                     } else return "";
                 }],
                 "upgrades",
