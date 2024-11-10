@@ -197,7 +197,7 @@ addLayer("m", {
         },
         42: {
             title: "Matteristic Essence",
-            description: "Creates a new effect to reduce Matter Essence boost to itself.",
+            description: "Creates a new effect, The name might be invented who knows! ",
             cost: new Decimal(250),
             currencyDisplayName: "Matter Essence",
             currencyInternalName: "matterEssence",
@@ -257,7 +257,7 @@ addLayer("m", {
                 ["display-text", function() {
                     // Display the self-boost reduction effect from Upgrade 42 if bought
                     if (hasUpgrade("m", 42)) {
-                        return `Matter Essence self-boost reduction: x${format(upgradeEffect("m", 42))}`;
+                        return `Matter Essence self-boost : x${format(upgradeEffect("m", 42))}`;
                     } else return "";
                 }],
                 "upgrades",
