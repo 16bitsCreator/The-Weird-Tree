@@ -198,7 +198,7 @@ addLayer("m", {
         42: {
             title: "Matteristic Essence",
             description: "Creates a new effect to reduce Matter Essence boost to itself.",
-            cost: new Decimal(700),
+            cost: new Decimal(250),
             currencyDisplayName: "Matter Essence",
             currencyInternalName: "matterEssence",
             currencyLayer: "m",
@@ -207,7 +207,7 @@ addLayer("m", {
                 return new Decimal(1).add(player.m.matterEssence.add(1).log(10));
             },
             effectDisplay() {
-                return "/" + format(this.effect()) + " to self-boost";
+                return "x" + format(this.effect()) + " to self-boost";
             },
             unlocked() {
                 return hasUpgrade("m", 34);
