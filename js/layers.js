@@ -156,7 +156,7 @@ addLayer("m", {
         24: {
             title: "Intensive Reversal",
             description: "Raise upgrade 14 based on Matter",
-            cost: new Decimal(400),
+            cost: new Decimal(1000),
             effect() {
                 let eff = player.points.add(1).pow(0.095);
                 return eff;
@@ -172,7 +172,7 @@ addLayer("m", {
         34: {
             title: "Matter Essence",
             description: "Adds 1 Matter Essence every second.",
-            cost: new Decimal(500),
+            cost: new Decimal(2000),
             unlocked() {
                 return hasUpgrade("m", 33);
             },
