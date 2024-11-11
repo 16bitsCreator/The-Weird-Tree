@@ -224,32 +224,16 @@ addLayer("m", {
             currencyInternalName: "matterEssence",       
             currencyLayer: "m",                          
             effect() {
-                return player.m.points.add(1).log(10).add(1).pow(1.5); 
+                return player.points.add(1).pow(0.15);
             },
-            effectDisplay() { 
-                return "x" + format(this.effect()) + " to Matter Essence gain"; 
-            },
-            unlocked() {
-                return hasUpgrade("m", 34);
-            },
-        },
-        44: {
-            title: "Essence-Enhanced Production",
-            description: "Matter Essence slightly raises the effect of Upgrade 11.",
-            cost: new Decimal(1200),                      
-            currencyDisplayName: "Matter Essence",      
-            currencyInternalName: "matterEssence",      
-            currencyLayer: "m",                         
-            effect() {
-                return player.m.matterEssence.add(1).pow(0.3);
-            },
-            effectDisplay() { 
-                return "x" + format(this.effect()) + " to Upgrade 11"; 
+            effectDisplay() {
+                return "x" + format(this.effect()) + " to Matter Essence production";
             },
             unlocked() {
                 return hasUpgrade("m", 41);
             },
         },
+
         51: {                                  
             title: "Autobuy Matter",
             description: "Allows automatic Matter point generation, and points are not reset on this layer's prestige.",
@@ -274,9 +258,9 @@ addLayer("m", {
         return hasUpgrade("m", 51);   
     },
 
-    // Preserve points on layer reset if Upgrade 51 is bought
+    // Explicitly preserve Matter points on layer reset if Upgrade 51 is bought
     doReset(resettingLayer) {
-        // Do nothing, prevent reset of points.
+        if (resettingLayer === "m") return;  // Prevent reset when the "m" layer is reset.
     },
 
     update(diff) {
