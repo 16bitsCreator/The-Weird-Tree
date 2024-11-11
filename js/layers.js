@@ -45,7 +45,12 @@ addLayer("m", {
             description: "Increases point generation based on Matter points.",
             cost: new Decimal(1),
             effect() {
-                return player[this.layer].points.add(1).pow(0.75); // Boost based on Matter points
+                let eff = player[this.layer].points.add(1).pow(0.75);
+                if (hasUpgrade("m", 44)) {
+                // Apply Upgrade 44’s effect as a power to the base effect
+                eff = eff.pow(upgradeEffect("m", 44));
+            }
+                return eff;// Boost based on Matter points
             },
             effectDisplay() { 
                 return "x" + format(this.effect()) + " to point generation"; 
@@ -213,6 +218,42 @@ addLayer("m", {
                 return hasUpgrade("m", 34);
             },
         },
+        43: {
+        title: "Matter Points Influence",
+        description: "Matter Points boost Matter Essence production.",
+        cost: new Decimal(1000),                     // Cost in Matter Essence
+        currencyDisplayName: "Matter Essence",       // Display name for currency
+        currencyInternalName: "matterEssence",       // Internal name for currency
+        currencyLayer: "m",                          // Layer that the currency is on
+        effect() {
+            // Apply a logarithmic boost based on Matter Points to control scaling
+            return player.m.points.add(1).log(10).add(1).pow(1.5); 
+        },
+        effectDisplay() { 
+            return "x" + format(this.effect()) + " to Matter Essence gain"; 
+        },
+        unlocked() {
+            return hasUpgrade("m", 34);               // Unlock after Matter Essence upgrade
+        },
+    },
+        44: {
+        title: "Essence-Enhanced Production",
+        description: "Matter Essence slightly raises the effect of Upgrade 11.",
+        cost: new Decimal(1200),                      // Cost in Matter Essence
+        currencyDisplayName: "Matter Essence",        // Display name for currency
+        currencyInternalName: "matterEssence",        // Internal name for currency
+        currencyLayer: "m",                           // Layer that the currency is on
+        effect() {
+            // Boost the Upgrade 11 effect with Matter Essence, controlled by a fractional exponent
+            return player.m.matterEssence.add(1).log(10).add(1).pow(0.25); 
+        },
+        effectDisplay() { 
+            return "^" + format(this.effect()) + " to Upgrade 11 effect"; 
+        },
+        unlocked() {
+            return hasUpgrade("m", 34);                // Unlock after Matter Essence upgrade
+        },
+    },
     },
     
 
@@ -231,6 +272,10 @@ addLayer("m", {
         if (hasUpgrade("m", 42)) {
             essenceGain = essenceGain.times(upgradeEffect("m", 42));
         }
+        if (hasUpgrade("m", 43)) {
+            essenceGain = essenceGain.times(upgradeEffect("m", 43));  // Boost from Upgrade 43
+        }
+
 
         // Add calculated essence gain to Matter Essence
         player.m.matterEssence = player.m.matterEssence.add(essenceGain);
