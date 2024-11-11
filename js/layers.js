@@ -267,11 +267,28 @@ addLayer("m", {
     },
 
     update(diff) {
-        if (hasUpgrade("m", 34)) {
-            player.m.matterEssence = player.m.matterEssence.add(diff);
-        }
-    },
+    // Check if Upgrade 34 is purchased before any essence gain calculations
+    if (hasUpgrade("m", 34)) {
+        let essenceGain = new Decimal(1).times(diff);  // Base essence gain per second
 
+        // Apply boost from Upgrade 41 if bought
+        if (hasUpgrade("m", 41)) {
+            essenceGain = essenceGain.times(upgradeEffect("m", 41));
+        }
+
+        // Apply reduction from Upgrade 42 if bought
+        if (hasUpgrade("m", 42)) {
+            essenceGain = essenceGain.times(upgradeEffect("m", 42));
+        }
+        if (hasUpgrade("m", 43)) {
+            essenceGain = essenceGain.times(upgradeEffect("m", 43));  // Boost from Upgrade 43
+        }
+
+
+        // Add calculated essence gain to Matter Essence
+        player.m.matterEssence = player.m.matterEssence.add(essenceGain);
+    }
+},
     doReset(resettingLayer) {
         // Check if Upgrade 51 has been purchased
         if (hasUpgrade("m", 51)) {
