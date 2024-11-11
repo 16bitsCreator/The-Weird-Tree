@@ -305,6 +305,19 @@ addLayer("m", {
                     }
                     return "";
                 }],
+                ["display-text", function() {
+                    // Display the Matter Essence effect on Matter Points
+                    if (player.m.matterEssence.gt(0)) {
+                        let essenceEffect = new Decimal(1).add(player.m.matterEssence.log(10).pow(2));
+                        return `Matter Points boost from Essence: /${format(essenceEffect)}`;
+                    } else return "";
+                }],
+                ["display-text", function() {
+                    // Display the self-boost reduction effect from Upgrade 42 if bought
+                    if (hasUpgrade("m", 42)) {
+                        return `Matter Essence self-boost: x${format(upgradeEffect("m", 42))}`;
+                    } else return "";
+                }],
                 "upgrades",
             ],
         },
