@@ -249,17 +249,7 @@ addLayer("m", {
                 return hasUpgrade("m", 34);
             },
         },
-        51: {
-            title: "Matter Preservation",
-            description: "Prevents resets in Matter Points layer.",
-            cost: new Decimal(5000),
-            currencyDisplayName: "Matter Essence",
-            currencyInternalName: "matterEssence",
-            currencyLayer: "m",
-            unlocked() {
-                return hasUpgrade("m", 34);
-            },
-        },
+       
     },
 
     update(diff) {
@@ -268,21 +258,9 @@ addLayer("m", {
         }
     },
 
-    doReset(resettingLayer) {
-        if (hasUpgrade("m", 51)) {
-            // If Upgrade 51 is purchased, prevent reset for this layer
-            return;
-        }
+    
 
-        if (resettingLayer >= this.row) {
-            // Reset Matter Points, but exclude "points" from resetting
-            layerDataReset("m", ["matterEssence", "upgrades", "points"]);
-        }
-    },
-
-    autoPrestige() {
-        return hasUpgrade("m", 51);
-    },
+    
 
     tabFormat: {
         "Main Tab": {
@@ -293,12 +271,7 @@ addLayer("m", {
                 ["display-text", function() { 
                     return `Matter Essence: ${format(player.m.matterEssence)}`;
                 }],
-                ["display-text", function() {
-                    if (hasUpgrade("m", 51)) {
-                        return `This layer will no longer reset.`;
-                    }
-                    return "";
-                }],
+                
                 ["display-text", function() {
                     if (player.m.matterEssence.gt(0)) {
                         let essenceEffect = new Decimal(1).add(player.m.matterEssence.log(10).pow(2));
