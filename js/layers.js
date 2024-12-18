@@ -255,8 +255,15 @@ addLayer("m", {
     update(diff) {
         if (hasUpgrade("m", 34)) {
             player.m.matterEssence = player.m.matterEssence.add(diff);
-        }
+        },
+        if(hasUpgrade("m", 41)) { 
+            player.m.matterEssence = player.m.matterEssence.times(upgradeEffect("m", 41))
+            },
+     if(hasUpgrade("m", 42)) { 
+            player.m.matterEssence = player.m.matterEssence.times(upgradeEffect("m", 42))
+            },
     },
+
 
     
 
